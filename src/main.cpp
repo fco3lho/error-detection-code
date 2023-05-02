@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -11,6 +12,23 @@ string createCDE(string text){
   }
 
   int CDE = ascii%256;
+  char charCDE = CDE;
+  string textWithCDE = text + charCDE;
+
+  return textWithCDE;
+}
+
+string generateError(string text){
+  srand(time(nullptr));
+  float ascii = 0;
+
+  for(long unsigned int i = 0; i < text.size(); i++){
+    float percent = rand() % 50;
+    text[i] = text[i] * (1 + (percent/1000));
+    ascii = ascii + text[i];
+  }
+
+  int CDE = (int)ascii%256;
   char charCDE = CDE;
   string textWithCDE = text + charCDE;
 
@@ -32,7 +50,7 @@ void compareText(string original, string modified){
 
 int main(){
   string originalText = createCDE("Ola, mundo");
-  string modifiedText = createCDE("OlW, mundo");
+  string modifiedText = generateError(originalText);
   
   cout << "Texto transmitido: " << originalText << endl;
   cout << "Texto recebido: " << modifiedText << endl;
